@@ -28,3 +28,5 @@ mongoose.connect('Your mongodb cluster link here',{useNewUrlParser: true, useUni
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
+
+### Use GoormIDE to run the application(Perferably)

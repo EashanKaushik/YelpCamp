@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>YelpCamp</title>
+		
+		<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    	
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+	</head>
+    <body>      
+        <nav id="navbar" class="navbar navbar-expand-md navbar-light fixed-top">
+            <div class="container-fluid">
+                <a id="brand" class="navbar-brand" href="/">Yelp Camp</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/campgrounds">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <% if(currentUser && currentUser.isAdmin){ %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin">Admin panel</a>
+                            </li>
+                        <% } %>                             
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <% if(!currentUser){ %>
+                            <li class="nav-item">
+                                <a class="nav-link login-signup" href="/login">Login</a>
+                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link login-signup" href="/register">Sign up</a>
+                            </li>
+                        <% } else { %>
+                            <li class="nav-item">
+                                <hr class="d-block d-md-none">
+                                <a class="nav-link login-signup" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> <%= currentUser.username %></i></a>
+                             </li>
+                            <li class="nav-item">
+                                <a id="red-logout-link" class="nav-link" href="/logout">Logout</a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <% if(error && error.length > 0){ %>
+        <div class="container">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= error %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <% } else if(success && success.length > 0){%>
+        <div class="container">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= success %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <% } %>
+
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    Users
+                </div>
+                <ul class="list-group list-gtoup-flush">
+                    <li class="list-group-item">
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            What is this section for?
+                        </a>
+                    </li>
+                </ul>
+                <div class="collapse" id="collapseExample">
+                    <div class="card-body">                    
+                        <div class="card-text">                        
+                            Well... it's for managing users! As an admin, you can remove them here, or make someone an admin too! :)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <% if(users.length){ %>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-sm mb-0 text-center">
+                        <caption class="sr-only">List of users</caption>
+                        <thead class="text-center">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User ID</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Is admin?</th>
+                                <th scope="col"><span class="sr-only">Actions</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach((user, index) => { %>
+                                <tr style="height: 15px;">                              
+                                    <form id="<%= `form${index}` %>" action="/users/<%= user._id %>/publish?_method=PUT" method="POST">
+                                        <th scope="row" class="align-middle"><%= index + 1 %></th>
+
+                                        <td class="p-0 align-middle">
+                                            <%= user._id %>
+                                            <input class="form-control rounded-0" type="text" name="user[_id]" value="<%= user._id %>" hidden readonly></input>
+                                        </td>
+
+                                        <td class="p-0 align-middle">
+                                            <%= user.username %>
+                                            <input class="form-control rounded-0" type="text" name="user[username]" value="<%= user.username %>" hidden readonly></input>
+                                        </td>
+
+                                        <td class="p-0 align-middle">
+                                            <%= user.isAdmin %>
+                                            <input class="form-control rounded-0" type="text" name="user[isAdmin]" value="<%= user.isAdmin ? 'true' : 'false' %>" hidden readonly></input>
+                                        </td>
+
+                                        <td class="p-0 align-middle h-100">
+                                            <div class="btn-group w-100 h-100">
+                                                <button class="btn btn-sm btn-danger rounded-0" type="submit" formaction="/users/<%= user._id %>?_method=DELETE">remove</button>
+                                            </div>
+                                        </td>
+                                    </form>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } else{ %>
+                <span class="my-3" style="text-align: center; color: dodgerblue;">There are no pending campgrounds.</span>
+                <% } %>
+            </div>
+
+<% include ../partials/footer %>

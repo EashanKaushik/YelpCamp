@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>YelpCamp</title>
+		
+		<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    	
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+	</head>
+    <body>      
+        <nav id="navbar" class="navbar navbar-expand-md navbar-light fixed-top">
+            <div class="container-fluid">
+                <a id="brand" class="navbar-brand" href="/">Yelp Camp</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/campgrounds">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <% if(currentUser && currentUser.isAdmin){ %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin">Admin panel</a>
+                            </li>
+                        <% } %>                         
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <% if(!currentUser){ %>
+                            <li class="nav-item">
+                                <a class="nav-link login-signup" href="/login">Login</a>
+                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link login-signup" href="/register">Sign up</a>
+                            </li>
+                        <% } else { %>
+                            <li class="nav-item">
+                                <hr class="d-block d-md-none">
+                                <a class="nav-link login-signup" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> <%= currentUser.username %></i></a>
+                             </li>
+                            <li class="nav-item">
+                                <a id="red-logout-link" class="nav-link" href="/logout">Logout</a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <% if(error && error.length > 0){ %>
+        <div class="container">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= error %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <% } else if(success && success.length > 0){%>
+        <div class="container">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= success %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <% } %>
+
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="user-nav-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="user-nav-campgrounds-tab" data-toggle="tab" href="#user-nav-campgrounds" role="tab" aria-controls="user-nav-campgrounds" aria-selected="true">Campgrounds</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="user-nav-comments-tab" data-toggle="tab" href="#user-nav-comments" role="tab" aria-controls="user-nav-comments" aria-selected="false">Comments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="user-nav-users-tab" data-toggle="tab" href="#user-nav-users" role="tab" aria-controls="user-nav-users" aria-selected="false">Users</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body pt-3">
+                    <div class="tab-content" id="user-nav-tabContent">
+                        <div class="tab-pane fade show active" id="user-nav-campgrounds" role="tabpanel" aria-labelledby="user-nav-campgrounds-tab">
+                            <div id="campgrounds" class="table-responsive">
+                                <% if(campgrounds.length < 1){ %>
+                                    <p class="text-center mb-0"><em style="color: grey;">No campgrounds found in database.</em></p>
+                                <% } else{ %>
+                                <input class="form-control rounded-0 search" type="text" name="search" placeholder="search..." max="150" />
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                        <tr class="text-primary">
+                                            <th class="border-top-0" scope="col">
+                                                <a type="button" id="campground_sortByName" class="btn btn-light btn-block nav-link p-1 px-2 mt-2 form-inline sort" data-sort="campgroundName" onclick="sortingButtons('campground_sortByName')">Name</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="campground_sortByStatus" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundStatus" onclick="sortingButtons('campground_sortByStatus')">Status</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="campground_sortByAuthor" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundAuthor" onclick="sortingButtons('campground_sortByAuthor')">Author</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="campground_sortByPrice" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundPrice" onclick="sortingButtons('campground_sortByPrice')">Price per night</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="campground_sortByRating" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundRating" onclick="sortingButtons('campground_sortByRating')">Average rating</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="campground_sortByLocation" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundLocation" onclick="sortingButtons('campground_sortByLocation')">Location</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="campground_sortByDate" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundDate" onclick="sortingButtons('campground_sortByDate')">Date added</a>
+                                            </th>
+                                            <th class="border-top-0" scope="col"><span class="sr-only">Actions</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                        <% campgrounds.forEach((campground, index) => { %>
+                                        <tr>
+                                            <td class="align-middle"><a href="/campgrounds/<%= campground._id %>" class="campgroundName"><%= campground.name %></a></td>
+                                            <td class="text-center align-middle"><span class="badge badge-pill badge-<%= campground.isPending ? 'warning' : 'success' %> campgroundStatus"><%= campground.isPending ? "pending" : "published" %></span></td>
+                                            <td class="text-center align-middle"><a href="/users/<%= campground.author.id %>" class="campgroundAuthor"><%= campground.author.username %></a></td>
+                                            <td class="text-center align-middle"><span class="campgroundPrice">€<%= campground.price %></span></td>
+								    		<td class="text-center align-middle"><span class="campgroundRating"><%= campground.averageRating ? campground.averageRating.toFixed(1) : "0.0" %> <i class="fas fa-star text-warning"></i></span></td>
+                                            <td class="text-center align-middle"><span class="campgroundLocation"><%= campground.location ? campground.location : "N/A" %></span></td>
+                                            <td class="text-center align-middle"><span class="campgroundDate"><%= moment(campground.createdAt).format('L, LTS') %></span></td>
+                                            
+                                            <td class="p-0 align-middle h-100">
+                                                <form class="inline-form w-100" id="campground-<%= `form${index}` %>" action="/campgrounds/pending/<%= campground._id %>/publish?_method=PUT" method="POST">
+                                                    <div class="btn-group w-100 h-100"> 
+                                                        <% if(!campground.isPending){ %>
+                                                        <a type="button" class="btn btn-sm btn-primary rounded-0" href="/campgrounds/<%= campground._id %>">view</a>                                                    
+                                                        <% } else{ %>                                                    
+                                                        <button class="btn btn-sm btn-success rounded-0" type="submit">post</button>
+                                                        <% } %>
+                                                        <a type="button" class="btn btn-sm btn-warning rounded-0" href="/campgrounds/<%= campground._id %>/edit?_method=GET">edit</a>
+                                                        <button class="btn btn-sm btn-danger rounded-0" type="submit" formaction="/campgrounds/<%= campground._id %>?_method=DELETE">remove</button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="user-nav-comments" role="tabpanel" aria-labelledby="user-nav-comments-tab">
+                            <div id="comments" class="table-responsive">
+                                <% if(comments.length < 1){ %>
+                                    <p class="text-center mb-0"><em style="color: grey;">No comments found in database.</em></p>
+                                <% } else{ %>
+                                <input class="form-control rounded-0 search" type="text" name="search" placeholder="search..." max="150" />
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                        <tr class="text-primary">
+                                            <th class="border-top-0" scope="col">
+                                	            <a type="button" id="comment_sortByText" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentText" onclick="sortingButtons('comment_sortByText')">Comment text</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="comment_sortByAuthor" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentAuthor" onclick="sortingButtons('comment_sortByAuthor')">Comment author</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="comment_sortByCommentDate" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentDate" onclick="sortingButtons('comment_sortByCommentDate')">Comment date added</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="comment_sortByCampground" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentCampground" onclick="sortingButtons('comment_sortByCampground')">Campground name</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="comment_sortByCampgroundStatus" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentCampgroundStatus" onclick="sortingButtons('comment_sortByCampgroundStatus')">Campground status</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="comment_sortByCampgroundAuthor" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentCampgroundAuthor" onclick="sortingButtons('comment_sortByCampgroundAuthor')">campground author</a>
+                                            </th>
+                                            <th class="border-top-0" scope="col"><span class="sr-only">Actions</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                        <% comments.forEach((comment, index) => { %>
+                                        <tr>
+                                        	<% var regex = /^((\w+'\w+|\w+)(|,)\s(\w+'\w+|\w+)(|,)\s(\w+'\w+|\w+)|^(\w+'\w+|\w+)(|,)\s(\w+'\w+|\w+)|^(\w+'\w+|\w+))/ %>
+					    					<% var arr = comment.text.match(regex) %>
+                                            <td class="align-middle"><span class="commentText"><%= arr[0] %>...</span></td>
+                                            <td class="text-center align-middle"><a href="/users/<%= comment.author.id %>" class="commentAuthor"><%= comment.author.username %></a></td>
+                                            <td class="text-center align-middle"><span class="commentDate"><%= moment(comment.createdAt).format('L, LTS') %></span></td>
+                                            <td class="text-center align-middle"><a href="/campgrounds/<%= comment.campground.id %>" class="commentCampground"><%= comment.campground.name %></a></td>
+                                            <td class="text-center align-middle"><span class="badge badge-pill badge-<%= comment.campground.isPending ? 'warning' : 'success' %> commentCampgroundStatus"><%= comment.campground.isPending ? "pending" : "published" %></span></td>
+                                            <td class="text-center align-middle"><a href="/campgrounds/<%= comment.campground.id %>" class="commentCampgroundAuthor"><%= comment.campground.author.username %></a></td>
+
+                                            <td class="p-0 align-middle h-100">
+                                                <form class="inline-form w-100" id="comment-<%= `form${index}` %>" action="/campgrounds/<%= comment.campground.id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                                    <div class="btn-group w-100 h-100">
+                                                        <a type="button" class="btn btn-sm btn-primary rounded-0" href="/campgrounds/<%= comment.campground.id %>#<%= comment._id %>">view</a>
+                                                        <a type="button" class="btn btn-sm btn-warning rounded-0" href="/campgrounds/<%= comment.campground.id %>#<%= comment._id %>">edit</a>
+                                                        <button class="btn btn-sm btn-danger rounded-0" type="submit">remove</button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="user-nav-users" role="tabpanel" aria-labelledby="user-nav-users-tab">
+                            <div id="users" class="table-responsive">
+                                <% if(users.length < 1){ %>
+                                    <p class="text-center mb-0"><em style="color: grey;">No users found in database.</em></p>
+                                <% } else{ %>
+                                <input class="form-control rounded-0 search" type="text" name="search" placeholder="search..." max="150" />
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                        <tr class="text-primary">
+                                            <th class="border-top-0" scope="col">
+                                	            <a type="button" id="user_sortByUsername" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="userUsername" onclick="sortingButtons('user_sortByUsername')">Username</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="user_sortByFirstname" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="userFirstname" onclick="sortingButtons('user_sortByFirstname')">First name</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="user_sortByLastname" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="userLastname" onclick="sortingButtons('user_sortByLastname')">Last name</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="user_sortByEmail" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="userEmail" onclick="sortingButtons('user_sortByEmail')">E-mail</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="user_sortByDate" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="userDate" onclick="sortingButtons('user_sortByDate')">Date joined</a>
+                                            </th>
+                                            <th class="border-top-0 text-center" scope="col">
+                                                <a type="button" id="user_sortByRole" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="userRole" onclick="sortingButtons('user_sortByRole')">Role</a>
+                                            </th>
+                                            <th class="border-top-0" scope="col"><span class="sr-only">Actions</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                        <% users.forEach((user, index) => { %>
+                                        <tr>
+                                            <td class="text-center align-middle"><a href="/users/<%= user._id %>" class="userUsername"><%= user.username %></a></td>
+                                            <td class="text-center align-middle"><span class="userFirstname"><%= user.firstName ? user.firstName : "N/A" %></span></td>
+                                            <td class="text-center align-middle"><span class="userLastname"><%= user.lastName ? user.lastName : "N/A" %></span></td>
+                                            <td class="text-center align-middle"><span class="userEmail"><%= user.email ? user.email : "N/A" %></span></td>                                            
+                                            <td class="text-center align-middle"><span class="userDate"><%= moment(user.createdAt).format('L, LTS') %></span></td>
+                                            <td class="text-center align-middle"><span class="badge badge-pill badge-<%= user.isAdmin ? 'primary' : 'secondary' %> userRole"><%= user.isAdmin ? "admin" : "user" %></span></td>
+
+                                            <td class="p-0 align-middle h-100">
+                                                <form class="inline-form w-100" id="users-<%= `form${index}` %>" action="/users/<%= user._id %>?_method=DELETE" method="POST">
+                                                    <div class="btn-group w-100 h-100">
+                                                        <a type="button" class="btn btn-sm btn-primary rounded-0" href="/users/<%= user.id %>">view</a>
+                                                        <% if(user.isAdmin && !currentUser._id.equals(user._id)){ %>
+                                                            <button class="btn btn-sm btn-warning rounded-0" type="submit" formaction="/users/<%= user._id %>/unop?_method=PUT">role <i class="fas fa-level-down-alt"></i></button>
+                                                        <% } else if(!user.isAdmin && !currentUser._id.equals(user._id)){%>
+                                                            <button class="btn btn-sm btn-success rounded-0" type="submit" formaction="/users/<%= user._id %>/op?_method=PUT">role <i class="fas fa-level-up-alt"></i></button>
+                                                        <% } %>
+                                                        <% if(!currentUser._id.equals(user._id)){ %>
+                                                            <button class="btn btn-sm btn-danger rounded-0" type="submit">remove</button>
+                                                        <% } %>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                                <% } %>
+                            </div>
+                        </div>             
+                        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+                        <script type="text/javascript">
+                            var campgroundsOptions = {
+                                valueNames: ['campgroundName', 'campgroundStatus', 'campgroundAuthor', 'campgroundPrice', 'campgroundRating', 'campgroundLocation', 'campgroundDate']
+                            };
+                            var commentsOptions = {
+                            	valueNames: ['commentText', 'commentAuthor', 'commentDate', 'commentCampground', 'commentCampgroundStatus', 'commentCampgroundAuthor']
+                            };
+                            var usersOptions = {
+                            	valueNames: ['userUsername', 'userFirstname', 'userLastname', 'userEmail', 'userDate', 'userRole']
+                            }
+
+                            var campgroundsList = new List('campgrounds', campgroundsOptions);
+                            var commentsList = new List('comments', commentsOptions);
+                            var usersList = new List('users', usersOptions);
+
+                            function sortingButtons(id){
+                                setTimeout(() => {
+                                    var arrowUp = document.querySelector('#arrowUp');
+                                    var arrowDown = document.querySelector('#arrowDown');
+                                    var thisElement = document.getElementById(id);
+                                    var thisElementClassesArray = Array.from(thisElement.classList);
+
+                                    if(arrowUp){
+                                        arrowUp.remove();
+                                    } else if(arrowDown){
+                                        arrowDown.remove();
+                                    }
+                                    
+                                    var temp = document.createElement('span');
+                                    
+                                    if(thisElementClassesArray.includes("desc")){
+                                        temp.setAttribute("id", "arrowDown");
+                                        temp.innerHTML = ' <i class="fas fa-sort-down"></i>';
+                                        thisElement.appendChild(temp);
+                                    } else{
+                                        temp.setAttribute("id", "arrowUp");
+                                        temp.innerHTML = ' <i class="fas fa-sort-up"></i>';
+                                        thisElement.appendChild(temp);
+                                    }
+                                }, 100);        
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<% include partials/footer %>

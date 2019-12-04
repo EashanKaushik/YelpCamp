@@ -1,0 +1,38 @@
+<% include ../partials/header %>
+
+<div class="row justify-content-center">
+	<div class="col-md-12 text-center">
+		<h1>Edit <%= campground.name %>:</h1>
+	</div>
+
+	<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+		<form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="campgroundName">Campground Name</label>
+				<input id="campgroundName" class="form-control" type="text" name="campground[name]" placeholder="Campground Name" value="<%= campground.name %>" maxlength="80" required autofocus>
+			</div>
+			<div class="form-group">
+				<label for="image">Campground Image (max. size = 500kB)</label><br />
+                <input type="file" id="image" name="image" accept="image/*">
+			</div>
+			<div class="form-group">
+				<label for="campgroundDesc">Campground Description</label>
+				<textarea id="campgroundDesc" class="form-control" type="text" name="campground[desc]" placeholder="Campground Description" maxlength="700" required><%= campground.desc %></textarea>
+			</div>
+			<div class="form-group">
+			    <label for="campgorundLocation">Campground Location (optional)</label>
+			    <input id="campgorundLocation" class="form-control" type="text" name="campground[location]" placeholder="e.g. Yosemite National Park, CA" value="<%= campground.location %>" maxlength="150">
+			</div>
+			<div class="form-group">
+				<label for="campgroundPrice">Campground Price Per Night</label>
+				<input id="campgroundPrice" class="form-control" type="number" name="campground[price]" placeholder="Campgorund Price Per Night" value="<%= campground.price %>" required>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Submit!</button>
+			</div>
+			<a href="javascript:history.back()"><i class="fas fa-arrow-left"></i> Go back</a>
+		</form>
+	</div>
+</div>
+	
+<% include ../partials/footer %>

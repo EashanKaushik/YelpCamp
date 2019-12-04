@@ -1,0 +1,118 @@
+html, body, nav{
+	min-width: 320px;
+}
+
+html {
+	min-height: 100vh;
+	position: relative;
+}
+
+body {
+	background: white;  /* fallback for old browsers */
+	background: white;  /* Chrome 10-25, Safari 5.1-6 */
+	background: white; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  	/* Margin bottom by footer height */
+ 	margin-bottom: 120px;
+ 	padding-top:  calc(56px + 2rem);
+ 	padding-bottom: 2rem;
+ 	min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6{
+	font-family: 'Exo 2', sans-serif;
+}
+
+a, button{
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+a:visited{
+	color: inherit;
+	background-color: rgba(0,0,0,0);
+}
+
+code{
+	background-color: rgba(0,0,0,0.05);
+	border-radius:  5px;
+	padding: 5px;
+}
+
+code a{
+	color: #e83e8c !important;
+}
+
+nav{
+	background-color: #f5f5f5;
+	font-family: 'Exo 2', sans-serif;
+	font-size: 1.2rem;
+	height: 56px;
+}
+
+#navbarSupportedContent{
+	background-color: #f5f5f5;
+}
+.active a{
+	color: #ad5389 !important;
+}
+
+.link,
+.highlight{
+	color: #2691EA !important;
+}
+
+#first p,
+#first ul,
+#first li{
+	font-family: "Dosis", sans-serif;
+	font-size: 1.05rem;
+}
+
+.prettyprint{
+	font-family: 'Source Code Pro', monospace;
+}
+
+table.routes td:nth-of-type(2n),
+table.routes td:nth-of-type(3n),
+table.rules td:nth-of-type(2n),
+table.rules td:nth-of-type(3n),
+table.rules td:nth-of-type(4n){
+	border-left: 1px solid #dee2e6;
+}
+
+#data-models,
+#campgrounds,
+#comments,
+#users,
+#routes,
+#campgrounds-1,
+#comments-1,
+#users-1,
+#general,
+#admin,
+#layout,
+#general-1,
+#admin-panel-page,
+#functionalities,
+#campgrounds-2,
+#comments-2,
+#users-2,
+#admin-1,
+#library{
+	padding-top: calc(56px + 2rem);
+}
+
+.footer {
+	background-color: #f5f5f5;
+	bottom: 0;
+	font-family: 'Exo 2', sans-serif;
+	font-size: 1.2rem;
+	/* Set the fixed height of the footer here */
+	height: 120px;
+	line-height: 115%;
+	position: absolute;
+	width: 100%;
+}
+
+.credit{
+	font-size: 0.8rem;
+}

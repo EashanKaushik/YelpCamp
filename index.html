@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<!-- You wanted to check what's happening in the background? That's fine, keep going :) JW-->
+<!-- Shout out to Bootstrap and GitHub Pages! -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- core stylesheets -->
+    <link rel="stylesheet" href="public/stylesheets/documentation/core.css">
+    <link rel="stylesheet" href="public/stylesheets/documentation/core_responsive.css">
+    <link rel="stylesheet" href="public/stylesheets/documentation/core_hover.css">
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet"> 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+    <title>YelpCamp app - documentation</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top px-0">
+        <div class="container-fluid">
+            <button class="navbar-toggler ml-auto mr-3" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="dropdown-divider d-block d-md-none"></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://wisnia74.github.io">home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://wisnia74.github.io/aboutMe">about me</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="https://wisnia74.github.io/projects">projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://wisnia74.github.io/resume.html">resume</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="first" class="container">
+        <div class="row">
+            <div class="heading col-12">
+                <h1 class="mb-4">YelpCamp application</h1>
+                <p><a class="link" href="http://yelp-camp-app-jw.herokuapp.com/" title="See the application live!">See the application live!</a></p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <p>Yelp Camp application created as a part of <a class="link" href="https://www.udemy.com/the-web-developer-bootcamp/" title="The web developer bootcamp course">The web developer bootcamp</a> course on <a class="link" href="https://www.udemy.com" title="Udemy">Udemy</a>. Basic functionalities were created as a part of the course, though there are a lot of them, that were implemented solely by me or using some of the additional tutorials uploadad on course's page.</p>
+                <p>The application follows <a class="link" href="https://www.codecademy.com/articles/what-is-rest" title="What is REST?">REST paradigm</a>, <a class="link" href="https://en.wikipedia.org/wiki/Responsive_web_design" title="What is RWD?">RWD techniques</a> and was created using <a class="link" href="https://en.wikipedia.org/wiki/MEAN_(software_bundle)" title="MEAN stack">MEN</a> stack, with <a class="link" href="https://ejs.co/" title="What is EJS?">EJS</a> as a view engine.</p>
+                <p>The idea behind this app, was to create a web portal that will allow users to add campgrounds, comment them, rate and basically interact with them in any other way. </p>
+                <p>My goal, when creating it, was to showcase my abilities as a web-developer, both in fields like design + functionalities and back-end logic + data manipulation.</p>
+                <p>List of all resources used in this project (frameworks, libraries, modules and others) can be found <a class="link" href="#library">at the bottom</a>.</p>
+                <p>Feel free to <a href="http://yelp-camp-app-jw.herokuapp.com/">visit my app</a> and interact with it to see how it works. My suggestions:</p>
+                <ul>
+                    <li>Try to create an account (sign up)</li>
+                    <li>Try to create a campground with/without specified location and see what happens when you do/don't specify it</li>
+                    <li>Visit you own profile page</li>
+                    <li>Visit other user's profile page</li>
+                    <li>Rate a campground, then visit it to see how and if rating updates</li>
+                    <li>Comment a campground</li>
+                    <li>Try to visit <span class="highlight">http://yelp-camp-app-jw.herokuapp.com/campgrounds/new</span> without logging in to your account, and see what happens</li>
+                    <li>Try to sort campgrounds on <code class="code-inline">/campgrounds</code> page and see if it works</li>
+                </ul>
+                <p><strong>Please, keep in mind that</strong>:</p>
+                <blockquote>
+                    <p><strong>1 .</strong>
+                       If the app is not live, then I'm probably making some changes to it and will leave it working once I'm done. If you want, try to revisit the URL in a couple of hours or so.
+                    </p>
+                  
+                    <p><strong>2 .</strong>
+                        If you want to sign up to my app to test this specific functionality, I advise to use <strong>fake data</strong>, since I'm not taking responsibility for potential data loss, in case you decided to sign up with your real email/name or a password that is valid in some online services. Furthermore, your input data is not going to be used anywhere else than in the app itself. Your data is not going to be stored in my database for longer than ~1h - that's how long approximately the server will be online. After this long, it goes to "sleep mode", once it resets when somebody tries to connect to it, a script launches that wipes out all the current data from the database and feeds it with random generated one. But just in  case - <strong>please, don't use any of your real personal data</strong>
+                    </p>
+                </blockquote>
+                <p>That's about it for a short introduction. More details below.</p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <hr>
+                <h2 class="mb-4">List of contents</h2>
+                <ol>
+                    <li>
+                        <a class="link scroll" href="#data-models">Data models</a>
+                        <ul>
+                            <li><a class="link scroll" href="#campgrounds">Campgrounds</a></li>
+                            <li><a class="link scroll" href="#comments">Comments</a></li>
+                            <li><a class="link scroll" href="#users">Users</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="link scroll" href="#routes">Routes</a>
+                        <ul>
+                            <li><a class="link scroll" href="#campgrounds-1">Campgrounds</a></li>
+                            <li><a class="link scroll" href="#comments-1">Comments</a></li>
+                            <li><a class="link scroll" href="#users-1">Users</a></li>
+                            <li><a class="link scroll" href="#general">General</a></li>
+                            <li><a class="link scroll" href="#admin">Admin</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="link scroll" href="#layout">Layout</a>
+                        <ul>
+                            <li><a class="link scroll" href="#general-1">General</a></li>
+                            <li><a class="link scroll" href="#admin-panel-page">Admin panel page</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="link scroll" href="#functionalities">Functionalities</a>
+                        <ul>
+                            <li><a class="link scroll" href="#campgrounds-2">Campgrounds</a></li>
+                            <li><a class="link scroll" href="#comments-2">Comments</a></li>
+                            <li><a class="link scroll" href="#users-2">Users</a></li>
+                            <li><a class="link scroll" href="#admin-1">Admin</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="link scroll" href="#library">Library</a>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="col-12 text-justify">
+                <hr>
+                <h3 id="data-models" class="mb-4">1. Data models</h3>
+                <p>My app includes data models for campgrounds, comments and users. Models were created using <code class="code-inline"><a href="https://mongoosejs.com/docs/models.html" title="What is mongoose Model?">mongoose.model()</a></code> method on <code class="code-inline"><a href="https://mongoosejs.com/docs/guide.html" title="What is mongoose Schema?">Schemas</a></code>.</p>
+
+                <p class="text-left">Diagram with DB relationships:</p>
+                <p class="text-center"><img class="img-fluid" src="docs_images/diagram.JPG" alt="Diagram with relationships between models" /></p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="campgrounds" class="mb-4">Campgrounds</h4>
+                <pre class="prettyprint linenums lang-js py-2 border border-light">
+var campgroundSchema = new mongoose.Schema({
+        author: {
+                id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+                username: String
+        },
+        image: { type: String, default: "/placeholder.jpg" },
+        name: String,
+        desc: String,
+        price: Number,
+        location: { type: String, default: "" },
+        lat: { type: Number, default: null },
+        lng: { type: Number, default: null },
+        createdAt: { type: Date, default: Date.now },
+        comments: [
+                { type: mongoose.Schema.Types.ObjectId, ref: "Comment" }   
+        ],
+        isPending: { type: Boolean, default: false },
+        rating: {
+                votes: {
+                        "5": { type: Number, default: 0 },
+                        "4": { type: Number, default: 0 },
+                        "3": { type: Number, default: 0 },
+                        "2": { type: Number, default: 0 },
+                        "1": { type: Number, default: 0 }           
+                },
+                averageRating: { type: Number, default: 0 },
+                votesQuantity: { type: Number, default: 0 },
+                multipliedRatingsSum: { type: Number, default: 0 },
+        }
+});</pre>
+
+                <p>The fields are quite self explanatory, but here's description of some of them.</p>
+                <p>
+                    <code class="code-inline">location</code> - necessarry for <a href="https://developers.google.com/maps/documentation/javascript/tutorial">Google Maps API</a>. Along with <code class="code-inline">lat</code> and <code cls="code-inline">lng</code> that stand for <em>latitude</em> and <em>longitude</em>.
+                </p>
+                <p>
+                    <code class="code-inline">author</code> - it stores author's ID in form of <code class="code-inline">mongoose.Schema.Types.ObjectId</code> that references specific <code class="code-inline">User</code> model.
+                </p>
+                <p>
+                    <code class="code-inline">comments</code> - array that stores IDs that reference specific <code class="code-inline">Comment</code> models.
+                </p>
+                <p>
+                    <code class="code-inline">rating</code> - here you can see my approach to ratings - object, with possible rating values as keys. Value of each key is equal to quantity of votes that are equal to the key itself. For example, <code class="code-inline">rating.votes["5"] = 5</code> means that now, there are five "5 star" ratings.
+                </p>
+                <p>
+                    <code class="code-inline">isPending</code> - if you specify campground's location when creating it, a request should be sent to google to <code class="code-inline">geocode</code> your input. Considering <a class="link" href="https://developers.google.com/maps/billing/understanding-cost-of-use" title="Google Maps billing">billing</a> behind Google Maps API, I can't allow people to make those requests however and whenever they want.<code class="code-inline">if(location)</code> then <code class="code-inline">isPending</code> is set to <code class="code-inline">true</code>, which means campground is not published until <code class="code-inline">admin</code> approves it. Only then, the location gets geocoded, and the map on <code class="code-inline">/campgrounds</code> <code class="code-inline">INDEX</code> page or <code class="code-inline">/campgrounds/:id</code> <code class="code-inline">SHOW</code> page, can be generated.
+                </p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="comments" class="mb-4">Comments</h4>
+                <pre class="prettyprint linenums lang-js py-2 border border-light">
+var commentSchema = new mongoose.Schema({    
+        author: {
+                id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+                username: String
+        },
+        text: String,
+        createdAt: { type: Date, default: Date.now },
+        campground: {
+                id: { type: mongoose.Schema.Types.ObjectId, ref: "Campground" },
+                author: {
+                        id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+                        username: String
+                },
+                name: String,
+                isPending: { type: Boolean, default: false }
+        }
+});</pre>
+
+                <p><code class="code-inline">campground</code> - it's there just for easier access to most important fields of associated campground</p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="users" class="mb-4">Users</h4>
+                <pre class="prettyprint linenums lang-js py-2 border border-light">
+var UserSchema = new mongoose.Schema({
+        username: String,
+        password: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+        avatar: { type: String, default: "/placeholder-user.png" },
+        createdAt: { type: Date, default: Date.now },
+        isAdmin: { type: Boolean, default: false },
+        ratings: [
+                {
+                        name: String,
+                        value: Number
+                        _id: { type: mongoose.Schema.Types.ObjectId, ref: "Campground" },
+                }    
+        ]
+});</pre>
+
+                <p><code class="code-inline">password</code> - type is <code class="code-inline">String</code> though it's not stored "as is". It gets encrypted by <code class="code-inline">passport</code>. So this filed means, that you also have <code class="code-inline">hash</code> and <code class="code-inline">salt</code>.</p>
+                <p><code class="code-inline">ratings</code> - campgrounds this user has rated, and what value he has given to each one</p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h3 id="routes" class="mb-4">2. Routes</h3>
+                <p>The application follows <a class="link" href="https://www.codecademy.com/articles/what-is-rest" title="What is REST?">REST paradigm</a>, but there are some custom routes I created and some different solutions here and there.</p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="campgrounds-1" class="mb-4">Campgrounds</h4>
+                <div class="table table-responsive">
+                    <table class="routes mx-right mb-2">
+                        <tr>
+                            <th class="border-top-0">URL</th>
+                            <th class="border-top-0 border-left">HTTP verb</th>
+                            <th class="border-top-0 border-left">Action</th>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds</td>
+                            <td>GET</td>
+                            <td>INDEX</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/new</td>
+                            <td>GET</td>
+                            <td>NEW</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/:id/edit</td>
+                            <td>GET</td>
+                            <td>EDIT</td> 
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/campgrounds/:id</td>
+                            <td>GET</td>
+                            <td>SHOW</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds</td>
+                            <td>POST</td>
+                            <td>CREATE</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/rate</td>
+                            <td>PUT</td>
+                            <td>custom route (rating campgrounds)</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/:id</td>
+                            <td>PUT</td>
+                            <td>UPDATE</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/pending/:id/publish</td>
+                            <td>PUT</td>
+                            <td>custom route (publishing pending campgrounds)</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/:id</td>
+                            <td>DELETE</td>
+                            <td>DESTROY</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="comments-1" class="mb-4">Comments</h4>
+                <div class="table table-responsive">
+                    <table class="routes mx-right mb-2">
+                        <tr>
+                            <th class="border-top-0">URL</th>
+                            <th class="border-top-0 border-left">HTTP verb</th>
+                            <th class="border-top-0 border-left">Action</th>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/:id/comments/new</td>
+                            <td>GET</td>
+                            <td>NEW (not in use now)</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/:id/comments/:comment_id/edit</td>
+                            <td>GET</td>
+                            <td>EDIT (not in use now)</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/:id/comments</td>
+                            <td>POST</td>
+                            <td>CREATE</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/:id/comments/:comment_id</td>
+                            <td>PUT</td>
+                            <td>UPDATE</td>
+                        </tr>
+                        <tr>
+                            <td>/campgrounds/:id/comments/:comment_id</td>
+                            <td>DELETE</td>
+                            <td>DESTROY</td>
+                        </tr>
+                    </table>
+                </div>
+                <p>The reason why I don't have <code class="code-inline">INDEX</code> or <code class="code-inline">SHOW</code> route for comments, is that I don't have a need to display them all at once, or as an "object", anywhere, to anyone on the site, unless it's a <code class="code-inline">campground</code> page. Though <code class="code-inline">admin</code> has a functionality called <code class="code-inline">admin panel</code>, that I will describe later. It allows him to see all the comments, and edit/delete any of them.</p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="general" class="mb-4">General</h4>
+                <div class="table table-responsive">
+                    <table class="routes mx-right mb-2">
+                        <tr>
+                            <th class="border-top-0">URL</th>
+                            <th class="border-top-0 border-left">HTTP verb</th>
+                            <th class="border-top-0 border-left">Action</th>
+                        </tr>
+                        <tr>
+                            <td>/</td>
+                            <td>GET</td>
+                            <td>custom route (landing page)</td>
+                        </tr>
+                    </table> 
+                </div>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="admin" class="mb-4">Admin</h4>
+                <div class="table table-responsive">
+                    <table class="routes mx-right mb-2">
+                        <tr>
+                            <th class="border-top-0">URL</th>
+                            <th class="border-top-0 border-left">HTTP verb</th>
+                            <th class="border-top-0 border-left">Action</th>
+                        </tr>
+                        <tr>
+                            <td>/admin</td>
+                            <td>GET</td>
+                            <td>custom route (show admin panel)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h3 id="layout" class="mb-4">3. Layout</h3>
+                <p>The app uses <a class="link" href="https://getbootstrap.com/" title="Bootstrap 4">Bootstrap 4</a> and was created with attention to <a class="link" href="https://pl.wikipedia.org/wiki/Responsive_web_design" title="What is RWD?">RWD</a> aspects.</p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="general-1">General</h4>
+                <p>Bootstrap elements used:</p>
+
+                <ul>
+                    <li><a class="link" href="https://getbootstrap.com/docs/4.3/components/list-group/">lists</a></li>
+                    <li><a class="link" href="https://getbootstrap.com/docs/4.3/components/card/" title="Card component">cards</a></li>
+                    <li><a class="link" href="https://getbootstrap.com/docs/4.3/components/badge/#pill-badges">pills</a></li>
+                </ul>
+                <p>Campground's <code>INDEX</code> page uses <a href="https://getbootstrap.com/docs/4.3/components/card/#card-decks" title="What is a card deck?">card deck</a> - card deck's feature is that if there are cards next to each other and they have a footer, their content automatically lines up vertically.</p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="admin-panel-page" class="mb-4">Admin panel page</h4>
+                <p>Unless other admin makes you an admin (and so far I'm the only one in the app), you won't see this screen ever, so here's a screenshot below:</p>
+                <p><img class="img-fluid" src="docs_images/admin_panel.JPG" alt="Admin panel page picture" /></p>
+                <p>Admin has an access to a list of all the entries in the database. <code class="code-inline">Campgrounds</code>, <code class="code-inline">Comments</code> and <code class="code-inline">Users</code>. The list is sortable using buttons below search bar. Buttons next to entires, on the right side, allow admin to interact with entries - edit/delete them, publish pending campgrounds, make users admins and so on.</p>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h3 id="functionalities" class="mb-4">4. Functionalities</h3>                
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="campgrounds-2" class="mb-4">Campgrounds</h4>
+                <ul>
+                    <li>
+                        <p>creating campgrounds</p>
+                        <ul>
+                            <li>
+                                <p>if you specify a valid location (i.e. the one that actually exists), after admin approval it will get geocoded and a Google Map will pop up on your campground's <code class="code-inline">SHOW</code> page</p>
+                            </li>
+                            <li>
+                                <p>you can upload a picture of your campground (achieved using <a class="link" href="https://github.com/expressjs/multer" title="What is multer?">multer</a> and <a class="link" href="https://cloudinary.com/" title="What is cloudinary?">cloudinary</a>)</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>editing campgrounds</p>
+                        <ul>
+                            <li>
+                                <p>if you are the owner of a campground or an admin, you will have acces to campground's edit form from various places - from the admin panel, campgrounds <code class="code-inline">INDEX</code> page, campgroud's <code class="code-inline">SHOW</code> page, user's <code class="code-inline">SHOW</code> page</p>
+                            </li>
+                            <li>
+                                <p>you can upload a new picture when editing a campground</p>
+                            </li>
+                            <li>
+                                <p>here are some rules regarding changing campground's location:</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="table table-responsive">
+                    <table class="rules mx-right mb-2">
+                        <tr>
+                            <th class="border-top-0">User role</th>
+                            <th class="border-top-0 border-left">Is location specified in the edit form?</th>
+                            <th class="border-top-0 border-left">Is location different than the previous one?</th>
+                            <th class="border-top-0 border-left">Action</th>
+                        </tr>
+                        <tr>
+                            <td>Regular user</td>
+                            <td>No</td>
+                            <td>-</td>
+                            <td>Update campground</td>
+                        </tr>
+                        <tr>
+                            <td>Regular user</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Update campground</td>
+                        </tr>
+                        <tr>
+                            <td>Regular user</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Update campground, don't publish it, set it to "pending" which means it will wait for admin approval</td>
+                        </tr>
+                        <tr>
+                            <td>Regular user</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                            <td>Update campground (That's the case of just removing campground's location on update)</td>
+                        </tr>
+                        <tr>
+                            <td>Admin</td>
+                            <td>No</td>
+                            <td>-</td>
+                            <td>Update campground</td>
+                        </tr>
+                        <tr>
+                            <td>Admin</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Update campground</td>
+                        </tr>
+                        <tr>
+                            <td>Admin</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Update campground, make a request for geocoding specified location, publish campground</td>
+                        </tr>
+                        <tr>
+                            <td>Admin</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                            <td>Update campground (That’s the case of just removing campground’s location on update)</td>
+                        </tr>
+                    </table> 
+                </div>
+
+                <ul>
+                    <li>
+                        <p>deleting campgrounds</p>
+                        <ul>
+                            <li>
+                                <p>you can delete campgrounds from various places if below condition is met - be it <code class="code-inline">INDEX</code> page, campground's <code class="code-inline">SHOW</code> page, user's <code class="code-inline">SHOW</code> page or admin panel.</p>
+                            </li>
+                            <li>
+                                <p>you can delete a campground only if you own it or you are an admin.</p>
+                            </li>
+                            <li>
+                                <p>anytime campground is deleted, comments associated with it get deleted too.</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>displaying campgrounds</p>
+                        <ul>
+                            <li>
+                                <p>on the <code class="code-inline">INDEX</code> page you will see Bootstrap 4 <a class="link" href="https://getbootstrap.com/docs/4.0/components/badge/#pill-badges">pill badges</a> on campgrounds images, providing some information about a specific campground - it's location, average rating and price per night.</p>
+                            </li>
+                            <li>
+                                <p>on the <code class="code-inline">INDEX</code> page - I implemented pagination of search results and sorting functionality. Sorting is preserved (when chosen) when changing page - achieved via  <a class="link" href="https://en.wikipedia.org/wiki/Query_string" title="What is a query string?">query strings</a>.</p>
+                            </li>
+                            <li>
+                                <p>on the <code class="code-inline">INDEX</code> and <code class="code-inline">SHOW</code> page - if you own a campground, or you are an admin, you will see buttons allowing you to edit a campground or delete it.</p>
+                            </li>
+                            <li>
+                                <p>on <code class="code-inline">INDEX</code> page - any user is allowed to rate a campground. Thi functionality was implemented with <a class="link" href="https://rateyo.fundoocode.ninja/" title="What is RateYo?">RateYo</a> - in it's current state, this function makes an AJAX request to the database to update campground's rating. Then it increases average rating value on the pill associated with this campground. Though, if you have rated a campground before, then the stars will be <code class="code-inline">read-only</code>, showing your rating.</p>
+                            </li>
+                            <li>
+                                <p>on <code class="code-inline">INDEX</code> page - you will see a 'Map' tab. If location is specified, then after clicking this tab a Google Map will be generated. After generating, this element recieves <code class="code-inline">generated</code> class, indicating that on the next click, map won't be generated. It means, that we won't be making useless requests to Google Maps API.</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="comments-2" class="mb-4">Comments</h4>
+                <ul>
+                    <li>
+                        <p>adding comments</p>
+                        <ul>
+                            <li>
+                                happens on campground's <code class="code-inline">SHOW</code> page. You need to be logged in to do that.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>editing comments</p>
+                        <ul>
+                            <li>
+                                happens on campground's <code class="code-inline">SHOW</code> page too. Same condition applies.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>deleting commens</p>
+                        <ul>
+                            <li>
+                                you can delete a comment only if you own it or you are an admin. You can do that from various places - campground's <code class="code-inline">SHOW</code> page, user's <code class="code-inline">SHOW</code> page or admin panel.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>displaying comments</p>
+                        <ul>
+                            <li>
+                                comments show up on campground's <code class="code-inline">SHOW</code> page, and also in admin panel and specific user's <code class="code-inline">SHOW</code> page. In the last scenario I mean only comments associated with this exact user.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="users-2" class="mb-4">Users</h4>
+                <ul>
+                    <li>
+                        <p>adding users</p>
+                        <ul>
+                            <li>
+                                <p>it happens through signing up</p>
+                            </li>
+                            <li>
+                                <p>you can upload your avatar picture</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>deleting user</p>
+                        <ul>
+                            <li>
+                                <p>only admin can delete users. It happens on admin panel.</p>
+                            </li>
+                            <li>
+                                <p>when a user is deleted, all the comments and campgrounds he created get deleted too.</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>displaying user</p>
+                        <ul>
+                            <li>
+                                <p>user's have their own <code class="code-inline">SHOW</code> page, that displays all the campground they have created, all the comments and all the ratings they have given. Also, avatar picture, some basic personal data and date joined.</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h4 id="admin-1" class="mb-4">Admin</h4>
+                <ul>
+                    <li>
+                        <p>general</p>
+
+                        <ul>
+                            <li>
+                                <p>can make campgrounds with specified location without waiting for any kind of approval - after validating if input location is ok, it gets geocoded, saved in the database and Google Maps can be generated throughout the app</p>
+                            </li>
+                            <li>
+                                <p>can edit/delete pretty much anything that exists in the database/you see in the app</p>
+                            </li>
+                            <li>
+                                <p>can make other users admins or take this privilage away from them</p>
+                            </li>
+                            <li>
+                                <p>has access to admin panel, which is basically a library of all campgrounds, comments and users currently in database</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 text-justify">
+                <h2 id="library" class="mb-4">Library</h2>
+                <ul>
+                    <li><a class="link" href="https://www.npmjs.com/package/body-parser">body-parser</a></li>
+                    <li><a class="link" href="https://cloudinary.com/">cloudinary</a></li>
+                    <li><a class="link" href="https://github.com/jaredhanson/connect-flash">connect-flash</a></li>
+                    <li><a class="link" href="https://www.npmjs.com/package/dotenv">dotenv</a></li>
+                    <li><a class="link" href="https://ejs.co/">ejs</a></li>
+                    <li><a class="link" href="https://expressjs.com/">express</a></li>
+                    <li><a class="link" href="https://www.npmjs.com/package/express-sanitizer">express-sanitizer</a></li>
+                    <li><a class="link" href="https://github.com/expressjs/session">express-session</a></li>
+                    <li><a class="link" href="https://github.com/expressjs/method-override">method-override</a></li>
+                    <li><a class="link" href="https://www.npmjs.com/package/module-alias">module-alias</a></li>
+                    <li><a class="link" href="https://momentjs.com/">moment</a></li>
+                    <li><a class="link" href="https://mongoosejs.com/">mongoose</a></li>
+                    <li><a class="link" href="https://github.com/expressjs/multer">multer</a></li>
+                    <li><a class="link" href="https://www.npmjs.com/package/node-geocoder">node-geocoder</a></li>
+                    <li><a class="link" href="http://www.passportjs.org/">passport</a></li>
+                    <li><a class="link" href="http://www.passportjs.org/packages/passport-local/">passport-local</a></li>
+                    <li><a class="link" href="https://github.com/saintedlama/passport-local-mongoose">passport-local-mongoose</a></li>
+                    <li><a class="link" href="https://rateyo.fundoocode.ninja/">rateyo</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid text-center">
+            <p class="text-muted mt-2">&#9400;<span class="current-year"></span> Jakub Wiśniowski</p>
+            <p>
+                <a class="social-icon" href="mailto:jakub.wisniowski74@gmail.com" title="Message me!"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"/></svg></a>
+
+                <a class="social-icon" href="https://www.linkedin.com/in/jakub-wisniowski/" title="My LinkedIn profile"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/></svg></a>
+
+                <a class="social-icon" href="https://github.com/wisnia74" title="My GitHub profile"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+            </p>
+            <p class="credit text-center mb-0"><em><a class="link" href="https://uigradients.com/" target="_blank" title="uiGradients">shout out to uiGradients</a></em></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+    <!-- core scripts -->
+    <script src="public/scripts/documentation/takeYear.js"></script>
+    <script src="public/scripts/documentation/scripts.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+<% include ../partials/header %>
+
+<div class="card mb-3 border-0">
+	<div class="row no-gutters">
+		<div class="col-md-4">
+			<div id="user-picture">
+				<img src="<%= user.avatar ? user.avatar : 'http://oakclifffilmfestival.com/assets/placeholder-user.png' %>" class="card-img rounded-lg" alt="<%= user.firstName + " " + user.lastName %> avatar picture" />				
+			</div>
+			<p class="text-center"><span class="text-primary">Member since </span> <%= moment(user.createdAt).format('L') %></p>
+		</div>
+		<div class="col-md-8">
+			<div class="card-body">
+				<h3 class="text-primary"><%if(user.isAdmin){%><i class="fas fa-user-shield"></i><%}else{%><i class="fas fa-user"></i><%}%> <%= user.username %></h3>
+				<hr>
+				<table class="table table-borderless table-sm">
+				  <tbody>
+				    <tr>
+				    	<th class="text-primary" scope="row">First name:</th>
+				    	<td><%if(user.firstName){%><%= user.firstName %><%}else{%><em>not specified</em><%}%></td>
+				    </tr>
+				    <tr>
+				    	<th class="text-primary" scope="row">Last name:</th>
+				    	<td></span> <%if(user.firstName){%><%= user.lastName %><%}else{%><em>not specified</em><%}%></td>
+				    </tr>
+				    <tr>
+				    	<th class="text-primary" scope="row">Email:</th>
+				    	<td>
+				    	<%if((currentUser && currentUser.isAdmin) || (currentUser && currentUser._id.equals(user._id))){%>
+							<%if(user.email){%>
+								<%=user.email%>
+							<%}else{%>
+								<em>not specified</em>
+							<%}%>
+						<%}else{%>
+							<em>hidden</em>
+						<%}%>
+						</td>
+				    </tr>
+				    <tr>
+				    	<th class="text-primary" scope="row">Role:</th>
+				    	<td><%= user.isAdmin ? 'Admin' : 'User' %></td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card mb-3">
+	<div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="user-nav-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="user-nav-campgrounds-tab" data-toggle="tab" href="#user-nav-campgrounds" role="tab" aria-controls="user-nav-campgrounds" aria-selected="true">Submitted campgrounds</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="user-nav-comments-tab" data-toggle="tab" href="#user-nav-comments" role="tab" aria-controls="user-nav-comments" aria-selected="false">Submitted comments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="user-nav-ratedCampgrounds-tab" data-toggle="tab" href="#user-nav-ratedCampgrounds" role="tab" aria-controls="user-nav-ratedCampgrounds" aria-selected="false">Rated campgrounds</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body pt-3">
+        <div class="tab-content" id="user-nav-tabContent">
+            <div class="tab-pane fade show active" id="user-nav-campgrounds" role="tabpanel" aria-labelledby="user-nav-campgrounds-tab">
+                <div id="campgrounds" class="table-responsive">
+                	<% if(campgrounds.length < 1){ %>
+                		<p class="text-center mb-0"><em style="color: grey;">No campgrounds submitted by this user.</em></p>
+                	<% } else{ %>
+		            <input class="form-control rounded-0 search" type="text" name="search" placeholder="search..." max="150" />
+                	<table class="table table-sm table-hover">
+						<thead>
+					    	<tr class="text-primary">
+					    		<th class="border-top-0 align-middle" scope="col">
+	                				<a type="button" id="campground_sortByName" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundName" onclick="sortingButtons('campground_sortByName')">Name</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="campground_sortByStatus" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundStatus" onclick="sortingButtons('campground_sortByStatus')">Status</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="campground_sortByPrice" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundPrice" onclick="sortingButtons('campground_sortByPrice')">Price per night</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="campground_sortByRating" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundRating" onclick="sortingButtons('campground_sortByRating')">Average rating</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="campground_sortByDate" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="campgroundDate" onclick="sortingButtons('campground_sortByDate')">Date added</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle" scope="col"><span class="sr-only">Actions</span></th>
+					    	</tr>
+						</thead>
+						<tbody class="list">
+							<% campgrounds.forEach((campground, index) => { %>
+					    	<tr>
+					    		<td class="align-middle"><a href="/campgrounds/<%= campground._id %>" class="campgroundName"><%= campground.name %></a></td>
+					    		<td class="text-center align-middle"><span class="badge badge-pill badge-<%= campground.isPending ? 'warning' : 'success' %> campgroundStatus"><%= campground.isPending ? "pending" : "published" %></span></td>
+					    		<td class="text-center align-middle"><span class="campgroundPrice">€<%= campground.price %></span></td>
+					    		<td class="text-center align-middle"><span class="campgroundRating"><%= campground.averageRating ? campground.averageRating.toFixed(1) : "0.0" %> <i class="fas fa-star text-warning"></i></span></td>
+					    		<td class="text-center align-middle"><span class="campgroundDate"><%= moment(campground.createdAt).format('L, LTS') %></span></td>
+					    		
+					    		<td class="p-0 align-middle h-100">
+                                    <div class="btn-group w-100 h-100">
+                                    	<% if(campground.isPending && (!currentUser || (currentUser && !currentUser.isAdmin))){ %>
+                                    	<a type="button" class="btn btn-sm btn-primary text-white rounded-0 disabled">view</a>
+                                    	<% }else{ %>
+                                    	<a type="button" class="btn btn-sm btn-primary rounded-0" href="/campgrounds/<%= campground._id %>">view</a>
+                                    	<% } %>
+                                    	
+                                        <% if((currentUser && currentUser._id.equals(user._id)) || (currentUser && currentUser.isAdmin)){ %>
+	                                        <% if(campground.isPending && (!currentUser || (currentUser && !currentUser.isAdmin))){ %>
+	                                        <a type="button" class="btn btn-sm btn-warning rounded-0 disabled">edit</a>
+	                                        <form class="inline-form" id="<%= `form${index}` %>">
+	                                        	<a type="button" class="btn btn-sm btn-danger text-white rounded-0 disabled">remove</a>
+	                                        </form>
+	                                        <% } else{ %>
+	                                        <a type="button" class="btn btn-sm btn-warning rounded-0" href="/campgrounds/<%= campground._id %>/edit?_method=GET">edit</a>
+	                                        <form class="inline-form" id="<%= `form${index}` %>" action="/campgrounds/pending/<%= campground._id %>/publish?_method=PUT" method="POST">
+	                                        	<button class="btn btn-sm btn-danger rounded-0" type="submit" formaction="/campgrounds/<%= campground._id %>?_method=DELETE">remove</button>
+	                                        </form>
+	                                        <% } %>
+                                        <% } %>
+                                    </div>
+                                </td>
+					    	</tr>
+					    	<% }) %>
+						</tbody>
+					</table>
+					<% } %>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="user-nav-comments" role="tabpanel" aria-labelledby="user-nav-comments-tab">
+            	<div id="comments" class="table-responsive">
+                	<% if(comments.length < 1){ %>
+                		<p class="text-center mb-0"><em style="color: grey;">No comments submitted by this user.</em></p>
+                	<% } else{ %>
+		            <input class="form-control rounded-0 search" type="text" name="search" placeholder="search..." max="150" />
+                	<table class="table table-sm table-hover">
+						<thead>
+					    	<tr class="text-primary">
+					    		<th class="border-top-0 align-middle" scope="col">
+	                				<a type="button" id="comment_sortByText" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentText" onclick="sortingButtons('comment_sortByText')">Comment's text</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="comment_sortByCampground" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentCampgroundName" onclick="sortingButtons('comment_sortByCampground')">Campground's name</a>
+					    		</th>					    		
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="comment_sortByStatus" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentCampgroundStatus" onclick="sortingButtons('comment_sortByStatus')">Campground's status</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="comment_sortByCampgroundAuthor" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentCampgroundAuthor" onclick="sortingButtons('comment_sortByCampgroundAuthor')">Campground's author</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="comment_sortByDate" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="commentDate" onclick="sortingButtons('comment_sortByDate')">Date added</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle" scope="col"><span class="sr-only">Actions</span></th>
+					    	</tr>
+						</thead>
+						<tbody class="list">
+							<% comments.forEach((comment, index) => { %>
+					    	<tr>
+					    		<% var regex = /^((\w+'\w+|\w+)(|,)\s(\w+'\w+|\w+)(|,)\s(\w+'\w+|\w+)|^(\w+'\w+|\w+)(|,)\s(\w+'\w+|\w+)|^(\w+'\w+|\w+))/ %>
+					    		<% var arr = comment.text.match(regex) %>
+					    		<td class="align-middle"><span class="commentText">"<%= arr[0] %>..."</span></td>
+					    		<td class="text-center align-middle"><a href="/campgrounds/<%= comment.campground.id %><%= '#' + comment._id %>" class="commentCampgroundName"><%= comment.campground.name %></a></td>
+					    		<td class="text-center align-middle"><span class="badge badge-pill badge-<%= comment.campground.isPending ? 'warning' : 'success' %> commentCampgroundStatus"><%= comment.campground.isPending ? "pending" : "published" %></span></td>
+					    		<td class="text-center align-middle"><a href="/users/<%= comment.campground.author.id %>" class="commentCampgroundAuthor"><%= comment.campground.author.username %></a></td>
+					    		<td class="text-center align-middle"><span class="commentDate"><%= moment(comment.createdAt).format('L, LTS') %></span></td>
+					    		
+					    		<td class="p-0 align-middle h-100">
+                                    <div class="btn-group w-100 h-100">
+                                    	<% if(comment.campground.isPending){ %>
+                                    	<a type="button" class="btn btn-sm btn-primary text-white rounded-0 disabled">view</a>
+                                    	<% }else{ %>
+                                    	<a type="button" class="btn btn-sm btn-primary rounded-0" href="/campgrounds/<%= comment.campground.id %>#<%= comment._id %>">view</a>
+                                    	<% } %>
+                                    	
+                                        <% if((currentUser && currentUser._id.equals(user._id)) || (currentUser && currentUser.isAdmin)){ %>
+	                                        <% if(comment.isPending){ %>
+	                                        <a type="button" class="btn btn-sm btn-warning rounded-0 disabled">edit</a>
+	                                        <form class="inline-form" id="<%= `form${index}` %>">
+	                                        	<a type="button" class="btn btn-sm btn-danger text-white rounded-0 disabled">remove</a>
+	                                        </form>
+	                                        <% } else{ %>
+	                                        <a type="button" class="btn btn-sm btn-warning rounded-0" href="/campgrounds/<%= comment.campground.id %>#<%= comment._id %>">edit</a>
+	                                        <form class="inline-form" id="<%= `form${index}` %>" action="/campgrounds/<%= comment.campground.id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+	                                        	<button class="btn btn-sm btn-danger rounded-0" type="submit">remove</button>
+	                                        </form>
+	                                        <% } %>
+                                        <% } %>
+                                    </div>
+                                </td>
+					    	</tr>
+					    	<% }) %>
+						</tbody>
+					</table>
+					<% } %>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="user-nav-ratedCampgrounds" role="tabpanel" aria-labelledby="user-nav-ratedCampgrounds-tab">
+            	<div id="ratings" class="table-responsive">
+                	<% if(user.ratings.length < 1){ %>
+                		<p class="text-center mb-0"><em style="color: grey;">No campgrounds rated by this user.</em></p>
+                	<% } else{ %>
+		            <input class="form-control rounded-0 search" type="text" name="search" placeholder="search..." max="150" />
+                	<table class="table table-sm table-hover">
+						<thead>
+					    	<tr class="text-primary">
+					    		<th class="border-top-0 align-middle" scope="col">
+	                				<a type="button" id="rating_sortByName" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="ratingCampgroundName" onclick="sortingButtons('rating_sortByName')">Campground's name</a>
+					    		</th>
+					    		<th class="border-top-0 align-middle text-center" scope="col">
+	                				<a type="button" id="rating_sortByRating" class="btn btn-light btn-block p-1 px-2 mt-2 form-inline sort" data-sort="ratingRate" onclick="sortingButtons('rating_sortByRating')">Given rating</a>
+					    		</th>
+					    	</tr>
+						</thead>
+						<tbody class="list">
+							<% user.ratings.forEach((campgroundRating, index) => { %>
+					    	<tr>
+					    		<td class="text-center align-middle"><a href="/campgrounds/<%= campgroundRating._id %>" class="ratingCampgroundName"><%= campgroundRating.name %></a></td>
+					    		<td class="text-center align-middle"><%= campgroundRating.value.toFixed(1) %> <i class="fas fa-star text-warning"></i></td>
+					    	</tr>
+					    	<% }) %>
+						</tbody>
+					</table>
+					<% } %>
+                </div>
+            </div>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+			<script type="text/javascript">
+				var options = {
+					valueNames: ['campgroundName', 'campgroundStatus', 'campgroundPrice', 'campgroundRating', 'campgroundDate']
+				};
+				var options2 = {
+					valueNames: ['commentText', 'commentCampgroundName', 'commentCampgroundStatus', 'commentCampgroundAuthor', 'commentDate']
+				};
+				var options3 = {
+					valueNames: ["ratingCampgroundName", "ratingRate"]
+				}
+				
+				var campgroundsList = new List('campgrounds', options);				
+				var commentsList = new List('comments', options2);
+				var ratingsList = new List('ratings', options3);
+
+				function sortingButtons(id){
+				    setTimeout(() => {
+				        var arrowUp = document.querySelector('#arrowUp');
+				        var arrowDown = document.querySelector('#arrowDown');
+				        var thisElement = document.getElementById(id);
+				        var thisElementClassesArray = Array.from(thisElement.classList);
+
+				        if(arrowUp){
+				            arrowUp.remove();
+				        } else if(arrowDown){
+				            arrowDown.remove();
+				        }
+						
+						var temp = document.createElement('span');
+						
+				        if(thisElementClassesArray.includes("desc")){
+				            temp.setAttribute("id", "arrowDown");
+				            temp.innerHTML = ' <i class="fas fa-sort-down"></i>';
+				            thisElement.appendChild(temp);
+				        } else{
+				            temp.setAttribute("id", "arrowUp");
+				            temp.innerHTML = ' <i class="fas fa-sort-up"></i>';
+				            thisElement.appendChild(temp);
+				        }
+				    }, 100);        
+				}
+			</script>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

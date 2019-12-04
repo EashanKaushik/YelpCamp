@@ -1,0 +1,7 @@
+/* Bootstrap XS */
+@media screen and (max-width: 575.98px){
+	/* navbar */
+	ul.navbar-nav .nav-item .nav-link{
+		margin-left: 5%;
+	}
+}

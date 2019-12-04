@@ -1,0 +1,228 @@
+#navbar a{
+	color: black;
+}
+#navbar #brand,
+nav#navbar .login-signup{
+	color: dodgerblue;
+}
+#navbar #red-logout-link{
+	color: red;
+}
+#brand:hover,
+#navbar .dropdown-toggle:hover,
+#navbar .nav-link:hover,
+#navbar .dropdown-item:hover{
+	opacity: 0.5;
+	background-color: transparent;
+}
+#navbar{
+	background-color: white;
+	border-bottom: 1px solid #CFE0FE;
+}
+#footer{
+	border-top: 1px solid #CFE0FE;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 35px; 
+  background-color: white;
+  text-align: center;
+}
+#footer ul{
+	color: black;
+}
+#footer-campground-name:hover{
+	text-decoration: none;
+	opacity: 0.5;
+}
+#footer-logo{
+	display: inline-block;
+	width: 180px;
+	height: 12px;
+	background-image: url("/footer-logo.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+html {
+	position: relative;
+	min-height: 100%;
+}
+body {
+	margin-bottom: 160px;
+	margin-top: 80px;
+	background: white;
+	height: 100%;
+}
+a:hover{
+	text-decoration: none;
+	z-index: 2;
+}
+.form-signin {
+	width: 100%;
+	max-width: 400px;
+	padding: 15px;
+	margin: 0 auto;
+}
+.form-signin .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 10px;
+	font-size: 16px;
+}
+.form-signin .form-control:focus {
+	z-index: 2;
+}
+.card-deck {
+  margin: 0 -15px;
+  justify-content: space-evenly;
+}
+.card-deck .card {
+  margin: 0 0 1rem;
+}
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .card-deck .card {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .card-deck .card {
+    -ms-flex: 0 0 48.7%;
+    flex: 0 0 48.7%;
+  }
+}
+@media (min-width: 992px)
+{
+  .card-deck .card {
+    -ms-flex: 0 0 32%;
+    flex: 0 0 32%;
+  }
+}
+.card-deck .card-footer{
+	font-size: 0.9rem;
+}
+.fa-dollar-sign{
+	color: green;
+}
+.card-img-top{
+	opacity: 0.8;
+}
+.absolute-overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+div.card div.card-header ul.card-header-tabs li.nav-item a.active:hover,
+div.card div.card-header ul.card-header-tabs li.nav-item a:hover{
+	opacity: 1;
+}
+.transparent-background{
+	background: rgba(1, 1, 1, 0);
+}
+.card-header .card-title{
+	margin-bottom: 0;
+}
+ul li a[aria-expanded=true] #comment-plus {
+   display: none;
+}
+ul li a[aria-expanded=false] #comment-minus {
+   display: none;
+}
+#details-table{
+	width: 60% !important;
+}
+@media (max-width: 991.98px){
+	#details-table{
+		width: 100% !important;
+	}
+}
+.hidden-input{
+	display: none;
+	width: 0px;
+	height: 0px;
+}
+#pending-campgrounds-table input,
+#pending-campgrounds-table th{
+	font-size: 11px;
+}
+#pending-campgrounds-table th,
+#pending-campgrounds-table input{
+	text-align: center;
+}
+#pending-campgrounds-table th,
+#pending-campgrounds-table td,
+#pending-campgrounds-table span{
+	vertical-align: middle;
+}
+#map, #map-placeholder{
+	position: relative;
+	height: 100%;
+}
+#map-placeholder p{
+	font-size: 14px;
+}
+#map-placeholder h4{
+	font-size: 18px;
+}
+#money{
+	color: green;
+}
+.delete-form{
+    display: inline;
+}
+i.fas.fa-info{
+	color: lightgrey;
+}
+i.fas.fa-info:hover{
+	cursor: pointer;
+}
+.badge-card-img,
+.badge-pill-a{
+	opacity: 0.8;
+}
+.badge-card-img:hover{
+	cursor: default;
+	opacity: 1;
+}
+.badge-pill-a:hover{
+	cursor: pointer;
+	opacity: 1;
+}
+@media (max-width: 320px){
+	.stars-set{
+		width: 100% !important;
+	}
+}
+#user-picture{
+	padding: 3rem !important;
+	margin-bottom: -2rem;
+}
+@media (max-width: 1199.98px){
+	#user-picture{
+		padding: 2rem !important;
+		margin-bottom: -1rem;
+	}
+}
+@media (max-width: 991.98px){
+	#user-picture{
+		padding: 1rem !important;
+		margin-bottom: 0rem;
+	}
+}
+@media (max-width: 767.98px){
+	#user-picture{
+		padding: 5rem !important;
+		margin-bottom: -4rem;
+		margin-top: -5rem;
+	}
+}
+@media (max-width: 575.98px){
+	#user-picture{
+		padding: 3rem !important;
+		margin-bottom: -2rem;
+		margin-top: -4rem;
+	}
+}

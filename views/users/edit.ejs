@@ -1,0 +1,46 @@
+<% include ../partials/header %>
+
+<div class="row">
+	<div class="col-md-12 text-center">
+		<h1>Edit <%= `${user.firstName} ${user.lastName}` %>:</h1>	
+	</div>
+
+	<div class="col-md-12">
+		<form action="/users/<%= user._id %>?_method=PUT" method="POST" class="form-signin">
+		    <div class="form-group">
+		    	<label for="username" class="sr-only">Username</label>
+		    	<input id="username" class="form-control" type="text" name="user[username]" placeholder="username" maxlength="50" required autofocus>
+		    </div>
+		    <div class="form-group">
+		    	<label for="password" class="sr-only">Password</label>
+		    	<input id="password" class="form-control" type="password" name="user[password]" placeholder="password" maxlength="50" required>
+		    </div>
+			<div class="form-group">
+		    	<label for="firstname" class="sr-only">First name</label>
+		    	<input id="firstname" class="form-control" type="text" name="user[firstName]" placeholder="first name" maxlength="50" required>
+		    </div>
+		    <div class="form-group">
+		    	<label for="lastname" class="sr-only">Last name</label>
+		    	<input id="lastname" class="form-control" type="text" name="user[lastName]" placeholder="last name" maxlength="50" required>
+		    </div>
+		    <div class="form-group">
+		    	<label for="email" class="sr-only">E-mail</label>
+		    	<input id="email" class="form-control" type="email" name="user[email]" placeholder="e-mail" maxlength="80" required>
+		    </div>		    
+		    <div class="form-group">
+				<label for="avatarURL" class="sr-only">Avatar URL</label>
+				<input id="avatarURL" class="form-control" type="url" name="user[avatar]" placeholder="avatar url">
+			</div>
+		    <div class="form-group">
+		    	<label for="adminSecretCode" class="sr-only">Admin Secret Code (optional)</label>
+		    	<input id="adminSecretCode" class="form-control" type="password" name="adminSecretCode" placeholder="admin secret code" maxLength="30">
+		    </div>
+		    <div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Submit!</button>
+			</div>
+			<a href="javascript:history.back()"><i class="fas fa-arrow-left"></i> Go back</a>
+		</form>
+	</div>
+</div>
+
+<% include ../partials/footer %>

@@ -1,0 +1,24 @@
+nav #brand-logo-a:hover{
+	cursor: default;
+	opacity: 0.7;
+}
+
+a.scroll:hover,
+.social-icon:hover{
+	cursor: pointer;
+	opacity: 0.7;
+}
+
+code a:hover{
+	text-decoration: none;
+	opacity: 0.7;
+}
+
+.credit a:hover{
+	text-decoration: none;
+}
+
+.link:hover{
+	text-decoration: none;
+	color: #0865B3 !important;
+}
